@@ -1,0 +1,91 @@
+@host = http://localhost:4000/graphql
+
+###
+
+# Get all floras
+POST {{host}}
+content-type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query {
+    getAllFlora {
+        id
+        title
+    }
+}
+
+###
+
+# Get a single flora
+POST {{host}}
+content-type: application/json
+X-REQUEST-TYPE: GraphQL
+
+query ($id: ID!) {
+    getFlora(id: $id) {
+        id
+        title
+        uses
+    }
+}
+
+{ "id": "61f9b9a2-4694-4b24-84f1-d5bd017bfbf0" }
+
+###
+
+# Add a new flora
+POST {{host}}
+content-type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($title: String!, $uses: String!) {
+    addFlora(title: $title, uses: $uses) {
+        id
+        title
+        uses
+    }
+}
+
+{
+    "title": "test",
+    "uses": "..."
+}
+
+###
+
+# Update a flora
+POST {{host}}
+content-type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($id: ID!, $title: String!, $uses: String!) {
+    editFlora(id: $id, title: $title, uses: $uses) {
+        id
+        title
+        uses
+    }
+}
+
+{
+    "id": "61f9b9a2-4694-4b24-84f1-d5bd017bfbf0",
+    "title": "This has been updated",
+    "uses": "This too"
+}
+
+
+###
+
+# Delete a flora
+POST {{host}}
+content-type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($id: ID!) {
+    deleteFlora(id: $id) {
+        id
+        title
+        uses
+    }
+}
+
+{ "id": "61f9b9a2-4694-4b24-84f1-d5bd017bfbf0" }

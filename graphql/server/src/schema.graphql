@@ -1,0 +1,16 @@
+type Flora {
+  id: ID!
+  title: String!
+  uses: String!
+}
+
+type Query {
+  getAllFlora: [Flora]
+  getFlora(id: ID): Flora
+}
+
+type Mutation {
+  addFlora(title: String!, uses: String!): Flora
+  editFlora(id: ID!, title: String!, uses: String!): Flora
+  deleteFlora(id: ID!): Flora
+}
