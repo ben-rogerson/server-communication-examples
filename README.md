@@ -10,7 +10,7 @@ Each frontend is basic Vite React website which can create, read, update, and de
 - GraphQL ✅
 - tRPC ✅
 - REST ✅
-- WebSockets (soon)
+- WebSocket ✅
 - gRPC (soon)
 - MQTT (soon)
 
