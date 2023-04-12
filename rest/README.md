@@ -25,3 +25,5 @@ cd client && npm install && npm run dev
 - React
 - TailwindCSS
 - Zod
+- React Router
+- React Query

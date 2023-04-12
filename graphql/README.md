@@ -28,3 +28,4 @@ cd client && npm install && npm run dev
 - Apollo Server
 - GraphQL Codegen
 - Zod
+- React Router
