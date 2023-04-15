@@ -11,6 +11,8 @@
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "strict": true,
+    "noImplicitAny": true,
     "types": [
       "node"
     ],
