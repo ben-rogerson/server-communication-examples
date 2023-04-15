@@ -2,22 +2,29 @@ import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { queries } from "./resolvers/queries.js";
 import { mutations } from "./resolvers/mutations.js";
+import { ZodError } from "zod";
 
 const errorResponder = (
-  error,
+  error: Error,
   request: Request,
   response: Response,
   next: NextFunction
 ) => {
   response.header("Content-Type", "application/json");
-  const status = error.statusCode || 400;
+  const status = 400;
 
-  try {
-    JSON.parse(error.message);
-    response.status(status).send(error.message);
-  } catch {
-    response.status(status).send(JSON.stringify({ message: error.message }));
+  // Simplify Zod error messages
+  if (error instanceof ZodError) {
+    const zodErrors = Object.values(
+      error.flatten((e) => e.message).fieldErrors
+    ).join(" / ");
+    return response.status(status).send(JSON.stringify(zodErrors));
   }
+
+  if (error instanceof Error)
+    return response.status(status).send(JSON.stringify(error.message));
+
+  response.status(status).send(JSON.stringify(error));
 };
 
 const port = 4000;
@@ -36,5 +43,5 @@ app.delete("/api/flora/:id", mutations.deleteFlora);
 app.use(errorResponder);
 
 app.listen(port, () => {
-  console.log(`🚀 Server ready at http://localhost:${port}`);
+  console.log(`🚀 Rest server listening at http://localhost:${port}`);
 });

@@ -26,7 +26,7 @@ export const mutations: Mutations = {
         flora.uses = params.uses ?? flora.uses;
       }
     });
-    const updatedFlora = [...flora].find((flora) => flora.id === params.id);
+    const updatedFlora = [...flora].find((flora) => flora.id === params.id)!;
     return updatedFlora;
   },
 

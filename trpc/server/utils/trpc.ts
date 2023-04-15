@@ -1,20 +1,18 @@
 import { initTRPC } from "@trpc/server";
+import { ZodError } from "zod";
 
 const t = initTRPC.create({
   errorFormatter({ shape, error }) {
-    let message = "";
-
-    try {
-      message = JSON.parse(error.message);
-    } catch {
-      message = error.message;
+    // Simplify Zod error messages
+    if (error.cause instanceof ZodError) {
+      const { formErrors, fieldErrors } = error.cause.flatten((e) => e.message);
+      const zodErrors = Object.values({ ...formErrors, ...fieldErrors }).join(
+        " / "
+      );
+      return { ...shape, message: zodErrors };
     }
 
-    if (typeof message === "string") return { ...shape, message };
-
-    const errors = Array.isArray(message) ? message : [message];
-    const errorList = errors.map((e: Error) => e.message).join(" / ");
-    return { ...shape, message: errorList };
+    return shape;
   },
 });
 

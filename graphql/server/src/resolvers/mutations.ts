@@ -29,7 +29,7 @@ export const mutations: Resolvers = {
           flora.uses = data.uses ?? flora.uses;
         }
       });
-      const updatedFlora = [...flora].find((flora) => flora.id === data.id);
+      const updatedFlora = [...flora].find((flora) => flora.id === data.id)!;
       return updatedFlora;
     },
 

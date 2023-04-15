@@ -17,6 +17,7 @@ const server = new ApolloServer({
 
     if (typeof message === "string") return { ...formattedError, message };
 
+    // Simplify Zod error messages
     const errors = Array.isArray(message) ? message : [message];
     const errorList = errors.map((e: Error) => e.message).join(" / ");
     return { ...formattedError, message: errorList };
@@ -25,4 +26,4 @@ const server = new ApolloServer({
 
 const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
 
-console.log(`🚀 Server ready at ${url}`);
+console.log(`🚀 GraphQL server listening at ${url}`);

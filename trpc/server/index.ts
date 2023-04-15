@@ -11,7 +11,7 @@ const server = createHTTPServer({
   router: appRouter,
 }).listen(2022);
 
-console.log(`🚀 Server ready at http://localhost:${server.port}`);
+console.log(`🚀 tRPC server listening at http://localhost:${server.port}`);
 
 export type AppRouter = typeof appRouter;
 export { appRouter, t };
