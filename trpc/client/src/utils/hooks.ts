@@ -14,7 +14,7 @@ export const useEditFlora = () => trpc.editFlora.useMutation();
 export const useDeleteFlora = () => {
   const utils = trpc.useContext();
   return trpc.deleteFlora.useMutation({
-    onSuccess() {
+    onSettled() {
       utils.getAllFlora.refetch();
     },
   });
