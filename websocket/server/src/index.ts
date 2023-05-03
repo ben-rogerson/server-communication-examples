@@ -1,4 +1,4 @@
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { Server, Socket } from "socket.io";
 import { type Queries, queries } from "./resolvers/queries.js";
 import { type Mutations, mutations } from "./resolvers/mutations.js";

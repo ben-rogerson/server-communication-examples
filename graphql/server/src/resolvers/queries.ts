@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { GraphQLError } from "graphql";
 import { Resolvers } from "../generated/resolvers-types";
 import florae from "./data.js";

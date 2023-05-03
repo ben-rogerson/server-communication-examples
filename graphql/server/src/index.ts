@@ -1,6 +1,6 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 import { queries } from "./resolvers/queries.js";
 import { mutations } from "./resolvers/mutations.js";
 
