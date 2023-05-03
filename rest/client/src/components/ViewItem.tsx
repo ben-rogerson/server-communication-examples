@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getErrorMessage } from "@/utils/getErrorMessage";
@@ -5,7 +6,10 @@ import { useDeleteFlora, useFlora } from "@/utils/hooks";
 import Flora from "./Flora";
 
 function ViewItem() {
-  const { id = "" } = useParams();
+  const { id } = useParams();
+  if (!id || !z.string().uuid().safeParse(id).success)
+    throw new Error("No ID provided");
+
   const flora = useFlora(id);
   const deleteFlora = useDeleteFlora();
   const [deleteError, setDeleteError] = useState<String | null>(null);

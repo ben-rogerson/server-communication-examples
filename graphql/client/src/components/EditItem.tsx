@@ -1,10 +1,14 @@
+import { z } from "zod";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useEditFlora, useFlora } from "@/utils/hooks";
 
 function EditItem() {
-  const { id = "" } = useParams();
+  const { id } = useParams();
+  if (!id || !z.string().uuid().safeParse(id).success)
+    throw new Error("No ID provided");
+
   const navigate = useNavigate();
   const flora = useFlora(id);
   const [editFlora] = useEditFlora();

@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         element: <ViewItem />,
       },
       {
-        path: "/edit/:id",
+        path: "/edit/:id?", // Optional so we can catch a missing id
         element: <EditItem />,
       },
     ],
