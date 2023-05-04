@@ -22,18 +22,18 @@ function ViewItem() {
     }
   };
 
-  if (flora.loading) return <>Loading</>;
-  if (flora.error)
-    return (
-      <div className="text-red-500">Error: {getErrorMessage(flora.error)}</div>
-    );
-
   if (deleteData.data)
     return (
       <>
         <div>Deleted “{deleteData.data.deleteFlora.title}”</div>
         <Link to="/">View all</Link>
       </>
+    );
+
+  if (flora.loading) return <>Loading</>;
+  if (flora.error)
+    return (
+      <div className="text-red-500">Error: {getErrorMessage(flora.error)}</div>
     );
 
   if (!flora.data) return null;

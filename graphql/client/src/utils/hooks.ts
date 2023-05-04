@@ -14,7 +14,6 @@ export const useFlora = (id: Flora["id"]) =>
 export const useAddFlora = () =>
   useMutation<{ addFlora: Flora["id"] }>(ADD_FLORA, {
     refetchQueries: [GET_ALL_FLORA],
-    awaitRefetchQueries: true,
   });
 
 export const useEditFlora = () => useMutation<{ editFlora: Flora }>(EDIT_FLORA);
@@ -22,5 +21,9 @@ export const useEditFlora = () => useMutation<{ editFlora: Flora }>(EDIT_FLORA);
 export const useDeleteFlora = () =>
   useMutation<{ deleteFlora: Flora }>(DELETE_FLORA, {
     refetchQueries: [GET_ALL_FLORA],
-    awaitRefetchQueries: true,
+    update: (cache, { data }) => {
+      if (!data?.deleteFlora) return;
+      const identity = cache.identify(data.deleteFlora);
+      cache.evict({ id: identity });
+    },
   });

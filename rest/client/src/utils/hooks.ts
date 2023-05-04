@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addFlora,
   deleteFlora,
@@ -22,8 +22,34 @@ export const useFlora = (id: Flora["id"]) =>
     retry: false,
   });
 
-export const useAddFlora = () => useMutation({ mutationFn: addFlora });
+export const useAddFlora = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: addFlora,
+    onSettled: () => {
+      queryClient.invalidateQueries(["viewAllFlora"]);
+    },
+  });
+};
 
-export const useEditFlora = () => useMutation({ mutationFn: editFlora });
+export const useEditFlora = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: editFlora,
+    onSettled: (input) => {
+      queryClient.invalidateQueries(["viewFlora", input?.id]);
+      queryClient.invalidateQueries(["viewAllFlora"]);
+    },
+  });
+};
 
-export const useDeleteFlora = () => useMutation({ mutationFn: deleteFlora });
+export const useDeleteFlora = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteFlora,
+    onSettled: (input) => {
+      queryClient.invalidateQueries(["viewFlora", input?.id]);
+      queryClient.invalidateQueries(["viewAllFlora"]);
+    },
+  });
+};

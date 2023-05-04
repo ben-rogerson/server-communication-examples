@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -37,13 +38,22 @@ const TRPC_CLIENT = trpc.createClient({
   links: [httpBatchLink({ url: "http://localhost:2022" })],
 });
 
+const queryClientInitialState = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+    },
+  },
+});
+
 export function App() {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => queryClientInitialState);
   const [trpcClient] = useState(() => TRPC_CLIENT);
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </trpc.Provider>
   );
