@@ -1,5 +1,7 @@
 import { trpc } from "@/utils/trpc";
 import { Flora } from "@serverTypes";
+import { useParams } from "react-router-dom";
+import { z } from "zod";
 
 export const useAllFlora = () =>
   trpc.getAllFlora.useQuery(undefined, { retry: false });
@@ -34,4 +36,12 @@ export const useDeleteFlora = () => {
       utils.getAllFlora.invalidate();
     },
   });
+};
+
+export const useIdParam = () => {
+  const { id } = useParams();
+  if (!id) throw new Error("No ID provided");
+  if (z.string().uuid().safeParse(id).success === false)
+    throw new Error("Incorrect ID provided");
+  return id;
 };

@@ -6,7 +6,7 @@ import { useAddFlora } from "@/utils/hooks";
 function AddItem() {
   const navigate = useNavigate();
   const [addFlora, { loading }] = useAddFlora();
-  const [addError, setAddError] = useState<String | null>(null);
+  const [addError, setAddError] = useState<string>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,11 +40,7 @@ function AddItem() {
         </label>
         <label className="block grid gap-y-1">
           <div>Culinary uses</div>
-          <textarea
-            rows={10}
-            name="uses"
-            className="w-full px-2 py-1"
-          ></textarea>
+          <textarea rows={10} name="uses" className="w-full px-2 py-1" />
         </label>
         <button
           type="submit"

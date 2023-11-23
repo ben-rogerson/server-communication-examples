@@ -7,6 +7,8 @@ import {
   viewFlora,
 } from "./api";
 import type { Flora } from "@serverTypes";
+import { useParams } from "react-router-dom";
+import { z } from "zod";
 
 export const useAllFlora = () =>
   useQuery({
@@ -52,4 +54,12 @@ export const useDeleteFlora = () => {
       queryClient.invalidateQueries(["viewAllFlora"]);
     },
   });
+};
+
+export const useIdParam = () => {
+  const { id } = useParams();
+  if (!id) throw new Error("No ID provided");
+  if (z.string().uuid().safeParse(id).success === false)
+    throw new Error("Incorrect ID provided");
+  return id;
 };

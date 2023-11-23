@@ -1,21 +1,17 @@
-import { z } from "zod";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "@/utils/getErrorMessage";
-import { useEditFlora, useFlora } from "@/utils/hooks";
+import { useEditFlora, useFlora, useIdParam } from "@/utils/hooks";
 
 function EditItem() {
-  const { id } = useParams();
-  if (!id || !z.string().uuid().safeParse(id).success)
-    throw new Error("No ID provided");
-
+  const id = useIdParam();
   const navigate = useNavigate();
   const flora = useFlora(id);
   const [editFlora] = useEditFlora();
-  const [editError, setEditError] = useState<String | null>(null);
+  const [editError, setEditError] = useState<string>();
 
   const handleChange = () => {
-    setEditError(null);
+    setEditError(undefined);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,7 +59,7 @@ function EditItem() {
             defaultValue={flora?.data?.getFlora.uses}
             className="w-full px-2 py-1"
             onChange={handleChange}
-          ></textarea>
+          />
         </label>
         <button
           type="submit"

@@ -2,6 +2,8 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_FLORA, DELETE_FLORA, EDIT_FLORA } from "@/resolvers/mutations";
 import { GET_ALL_FLORA, GET_FLORA } from "@/resolvers/queries";
 import { Flora } from "@serverTypes";
+import { useParams } from "react-router-dom";
+import { z } from "zod";
 
 export const useAllFlora = () =>
   useQuery<{ getAllFlora: Flora[] }>(GET_ALL_FLORA);
@@ -27,3 +29,11 @@ export const useDeleteFlora = () =>
       cache.evict({ id: identity });
     },
   });
+
+export const useIdParam = () => {
+  const { id } = useParams();
+  if (!id) throw new Error("No ID provided");
+  if (z.string().uuid().safeParse(id).success === false)
+    throw new Error("Incorrect ID provided");
+  return id;
+};
