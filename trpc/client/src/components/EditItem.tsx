@@ -40,7 +40,7 @@ function EditItem() {
   return (
     <>
       <form onSubmit={handleSubmit} className="flex flex-col gap-y-5">
-        <label className="block grid gap-y-1">
+        <label className="grid gap-y-1">
           <div>Flora name</div>
           <input
             name="title"
@@ -51,7 +51,7 @@ function EditItem() {
             onChange={handleChange}
           />
         </label>
-        <label className="block grid gap-y-1">
+        <label className="grid gap-y-1">
           <div>Culinary uses</div>
           <textarea
             name="uses"

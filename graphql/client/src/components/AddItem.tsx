@@ -29,7 +29,7 @@ function AddItem() {
   return (
     <>
       <form onSubmit={handleSubmit} className="flex flex-col gap-y-5">
-        <label className="block grid">
+        <label className="grid">
           <div>Flora name</div>
           <input
             name="title"
@@ -38,7 +38,7 @@ function AddItem() {
             className="w-full px-2 py-1"
           />
         </label>
-        <label className="block grid gap-y-1">
+        <label className="grid gap-y-1">
           <div>Culinary uses</div>
           <textarea rows={10} name="uses" className="w-full px-2 py-1" />
         </label>
